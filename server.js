@@ -1,20 +1,32 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
-const Video = require('./models/video'); // Import Video model
 
 const app = express();
-app.use(express.json()); // Middleware to parse JSON requests
+
+// Middleware
+app.use(cors({ origin: 'https://vbs-pink.vercel.app' })); // Allow requests from frontend
+app.use(express.json()); // Parse JSON requests
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
-  .then(() => {
-    console.log('Connected to MongoDB!');
-  })
-  .catch((error) => {
-    console.error('Error connecting to MongoDB:', error);
-  });
+  .then(() => console.log('Connected to MongoDB!'))
+  .catch((error) => console.error('Error connecting to MongoDB:', error));
 
+// Define Mongoose Schema
+const videoSchema = new mongoose.Schema({
+  videoId: String, // Unique identifier for each video
+  likes: { type: Number, default: 0 },
+  comments: [
+    {
+      username: String,
+      comment: String,
+      timestamp: { type: Date, default: Date.now },
+    },
+  ],
+});
 
+const Video = mongoose.model('Video', videoSchema);
 
 // Route to add a comment
 app.post('/api/comments', async (req, res) => {
@@ -69,7 +81,5 @@ app.post('/api/likes', async (req, res) => {
 });
 
 // Start the server
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
