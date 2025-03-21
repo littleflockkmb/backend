@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const videoSchema = new mongoose.Schema({
-  videoId: String, // Unique identifier for each video
+  videoId: String,
   likes: { type: Number, default: 0 },
   comments: [
     {
