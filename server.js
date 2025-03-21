@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:@littleflock-123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
+mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:littleflock-123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
   .then(() => {
     console.log('Connected to MongoDB!');
   })
