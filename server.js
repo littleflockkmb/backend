@@ -62,6 +62,7 @@ app.get('/api/likes/:videoId', async (req, res) => {
   }
 });
 
+
 // Add a comment
 app.post('/api/comments', async (req, res) => {
   const { videoId, username, comment } = req.body;
