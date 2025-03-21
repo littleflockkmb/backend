@@ -80,6 +80,23 @@ app.post('/api/likes', async (req, res) => {
   }
 });
 
+// Get likes for a video
+app.get('/api/likes/:videoId', async (req, res) => {
+  const { videoId } = req.params;
+
+  try {
+    const video = await Video.findOne({ videoId });
+    if (video) {
+      res.json({ likes: video.likes });
+    } else {
+      res.status(404).json({ message: 'Video not found!' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve likes!' });
+  }
+});
+
+
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
