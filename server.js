@@ -6,14 +6,14 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:<db_password>@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('Connected to MongoDB!');
-}).catch((error) => {
-  console.error('Error connecting to MongoDB:', error);
-});
+mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:@littleflock-123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
+  .then(() => {
+    console.log('Connected to MongoDB!');
+  })
+  .catch((error) => {
+    console.error('Error connecting to MongoDB:', error);
+  });
+
 
 // Route to add a comment
 app.post('/api/comments', async (req, res) => {
