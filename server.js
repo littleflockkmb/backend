@@ -6,13 +6,14 @@ const app = express();
 app.use(express.json()); // Middleware to parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:littleflock-123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
+mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:#agdshfcuth@cluster0.mongodb.net/videodb?retryWrites=true&w=majority')
   .then(() => {
     console.log('Connected to MongoDB!');
   })
   .catch((error) => {
     console.error('Error connecting to MongoDB:', error);
   });
+
 
 
 // Route to add a comment
