@@ -5,17 +5,17 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Middleware
-app.use(cors({ origin: 'https://vbs-pink.vercel.app' }));
-app.use(express.json());
+app.use(cors({ origin: 'https://vbs-pink.vercel.app' })); // Allow requests from frontend
+app.use(express.json()); // Parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://<username>:<password>@cluster0.mongodb.net/videodb?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
   .then(() => console.log('Connected to MongoDB!'))
   .catch((error) => console.error('Error connecting to MongoDB:', error));
 
-// Mongoose Schema
+// Define Mongoose Schema
 const videoSchema = new mongoose.Schema({
-  videoId: String,
+  videoId: String, // Unique identifier for each video
   likes: { type: Number, default: 0 },
   comments: [
     {
@@ -28,7 +28,41 @@ const videoSchema = new mongoose.Schema({
 
 const Video = mongoose.model('Video', videoSchema);
 
-// Add a like
+// Route to add a comment
+app.post('/api/comments', async (req, res) => {
+  const { videoId, username, comment } = req.body;
+
+  try {
+    let video = await Video.findOne({ videoId });
+    if (!video) {
+      video = new Video({ videoId });
+    }
+    video.comments.push({ username, comment });
+    await video.save();
+
+    res.json({ message: 'Comment added successfully!', comments: video.comments });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to add comment!' });
+  }
+});
+
+// Route to get comments
+app.get('/api/comments/:videoId', async (req, res) => {
+  const { videoId } = req.params;
+
+  try {
+    const video = await Video.findOne({ videoId });
+    if (video) {
+      res.json({ comments: video.comments });
+    } else {
+      res.status(404).json({ message: 'Video not found!' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve comments!' });
+  }
+});
+
+// Route to add a like
 app.post('/api/likes', async (req, res) => {
   const { videoId } = req.body;
 
@@ -62,40 +96,6 @@ app.get('/api/likes/:videoId', async (req, res) => {
   }
 });
 
-
-// Add a comment
-app.post('/api/comments', async (req, res) => {
-  const { videoId, username, comment } = req.body;
-
-  try {
-    let video = await Video.findOne({ videoId });
-    if (!video) {
-      video = new Video({ videoId });
-    }
-    video.comments.push({ username, comment });
-    await video.save();
-
-    res.json({ message: 'Comment added successfully!', comments: video.comments });
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to add comment!' });
-  }
-});
-
-// Get comments for a video
-app.get('/api/comments/:videoId', async (req, res) => {
-  const { videoId } = req.params;
-
-  try {
-    const video = await Video.findOne({ videoId });
-    if (video) {
-      res.json({ comments: video.comments });
-    } else {
-      res.status(404).json({ message: 'Video not found!' });
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve comments!' });
-  }
-});
 
 // Start the server
 const PORT = process.env.PORT || 3000;
