@@ -89,16 +89,18 @@ app.get('/api/likes/:videoId', async (req, res) => {
   const { videoId } = req.params;
 
   try {
-    const video = await Video.findOne({ videoId });
-    if (video) {
-      res.json({ likes: video.likes }); // Send the current like count
-    } else {
-      res.status(404).json({ message: 'Video not found!' });
+    let video = await Video.findOne({ videoId }); // Check if the video exists
+    if (!video) {
+      // If the video does not exist, initialize it with 0 likes
+      video = new Video({ videoId, likes: 0, comments: [] });
+      await video.save();
     }
+    res.json({ likes: video.likes }); // Respond with the current like count
   } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve likes!' });
+    res.status(500).json({ error: 'Failed to retrieve likes!' }); // Handle errors
   }
 });
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;
