@@ -82,7 +82,7 @@ app.post('/api/likes', async (req, res) => {
 });
 
 // Get likes for a video
-app.get('/api/likes/:videoId', async (req, res) => {
+/*app.get('/api/likes/:videoId', async (req, res) => {
   const { videoId } = req.params;
 
   try {
@@ -95,7 +95,22 @@ app.get('/api/likes/:videoId', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve likes!' });
   }
+});*/
+app.get('/api/likes/:videoId', async (req, res) => {
+  const { videoId } = req.params; // Extract videoId from the request
+
+  try {
+    const video = await Video.findOne({ videoId }); // Find the video by its ID
+    if (video) {
+      res.json({ likes: video.likes }); // Send the current number of likes
+    } else {
+      res.status(404).json({ message: 'Video not found!' }); // If no video is found
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to retrieve likes!' }); // Handle server errors
+  }
 });
+
 
 
 
