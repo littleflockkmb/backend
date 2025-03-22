@@ -9,7 +9,7 @@ app.use(cors({ origin: 'https://vbs-pink.vercel.app' })); // Allow requests from
 app.use(express.json()); // Parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect('your-mongodb-connection-string', {
+mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
