@@ -62,6 +62,7 @@ app.get('/api/comments/:videoId', async (req, res) => {
   }
 });
 
+
 // Route to add a like
 app.post('/api/likes', async (req, res) => {
   const { videoId } = req.body;
@@ -95,6 +96,7 @@ app.get('/api/likes/:videoId', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve likes!' });
   }
 });
+
 
 
 // Start the server
