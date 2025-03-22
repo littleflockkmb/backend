@@ -86,20 +86,21 @@ app.post('/api/likes', async (req, res) => {
 
 // Route to get likes for a video
 app.get('/api/likes/:videoId', async (req, res) => {
-  const { videoId } = req.params;
+  const { videoId } = req.params; // Extract videoId from the URL
 
   try {
-    let video = await Video.findOne({ videoId }); // Check if the video exists
+    let video = await Video.findOne({ videoId }); // Search for the video in the database
     if (!video) {
-      // If the video does not exist, initialize it with 0 likes
+      // If video does not exist, initialize with 0 likes
       video = new Video({ videoId, likes: 0, comments: [] });
-      await video.save();
+      await video.save(); // Save the new video to the database
     }
-    res.json({ likes: video.likes }); // Respond with the current like count
+    res.json({ likes: video.likes }); // Send the like count
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve likes!' }); // Handle errors
   }
 });
+
 
 
 // Start the server
