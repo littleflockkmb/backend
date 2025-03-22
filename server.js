@@ -97,19 +97,20 @@ app.post('/api/likes', async (req, res) => {
   }
 });*/
 app.get('/api/likes/:videoId', async (req, res) => {
-  const { videoId } = req.params; // Extract videoId from the request
+  const { videoId } = req.params; // Extract videoId from request parameters
 
   try {
-    const video = await Video.findOne({ videoId }); // Find the video by its ID
+    const video = await Video.findOne({ videoId }); // Find the video by ID
     if (video) {
-      res.json({ likes: video.likes }); // Send the current number of likes
+      res.json({ likes: video.likes }); // Respond with the current like count
     } else {
-      res.status(404).json({ message: 'Video not found!' }); // If no video is found
+      res.status(404).json({ message: 'Video not found!' }); // If video doesn't exist
     }
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve likes!' }); // Handle server errors
   }
 });
+
 
 
 
