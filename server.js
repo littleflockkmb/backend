@@ -9,7 +9,10 @@ app.use(cors({ origin: 'https://vbs-pink.vercel.app' })); // Allow requests from
 app.use(express.json()); // Parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
+mongoose.connect('your-mongodb-connection-string', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
   .then(() => console.log('Connected to MongoDB!'))
   .catch((error) => console.error('Error connecting to MongoDB:', error));
 
@@ -26,6 +29,7 @@ const videoSchema = new mongoose.Schema({
   ],
 });
 
+// Mongoose Model
 const Video = mongoose.model('Video', videoSchema);
 
 // Route to add a comment
@@ -62,7 +66,6 @@ app.get('/api/comments/:videoId', async (req, res) => {
   }
 });
 
-
 // Route to add a like
 app.post('/api/likes', async (req, res) => {
   const { videoId } = req.body;
@@ -70,9 +73,9 @@ app.post('/api/likes', async (req, res) => {
   try {
     let video = await Video.findOne({ videoId });
     if (!video) {
-      video = new Video({ videoId });
+      video = new Video({ videoId }); // Create a new video document if not found
     }
-    video.likes += 1;
+    video.likes += 1; // Increment likes
     await video.save();
 
     res.json({ message: 'Like added!', likes: video.likes });
@@ -81,39 +84,21 @@ app.post('/api/likes', async (req, res) => {
   }
 });
 
-// Get likes for a video
-/*app.get('/api/likes/:videoId', async (req, res) => {
+// Route to get likes for a video
+app.get('/api/likes/:videoId', async (req, res) => {
   const { videoId } = req.params;
 
   try {
     const video = await Video.findOne({ videoId });
     if (video) {
-      res.json({ likes: video.likes });
+      res.json({ likes: video.likes }); // Send the current like count
     } else {
       res.status(404).json({ message: 'Video not found!' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Failed to retrieve likes!' });
   }
-});*/
-app.get('/api/likes/:videoId', async (req, res) => {
-  const { videoId } = req.params; // Extract videoId from request parameters
-
-  try {
-    const video = await Video.findOne({ videoId }); // Find the video by ID
-    if (video) {
-      res.json({ likes: video.likes }); // Respond with the current like count
-    } else {
-      res.status(404).json({ message: 'Video not found!' }); // If video doesn't exist
-    }
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to retrieve likes!' }); // Handle server errors
-  }
 });
-
-
-
-
 
 // Start the server
 const PORT = process.env.PORT || 3000;
