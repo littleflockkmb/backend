@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Middleware
-app.use(cors({ origin: 'https://vbs-pink.vercel.app' })); // Allow requests from frontend
+app.use(cors({ origin: 'https://littleflockweb.vercel.app/vbs.html' })); // Allow requests from frontend
 app.use(express.json()); // Parse JSON requests
 
 // Connect to MongoDB
