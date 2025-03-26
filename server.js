@@ -177,8 +177,7 @@ app.use(bodyParser.json());
 
 // MongoDB Connection
 mongoose.connect(
-    'mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/littleflockweb?retryWrites=true&w=majority',
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    'mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/littleflockweb?retryWrites=true&w=majority'
 )
     .then(() => console.log('Connected to MongoDB!'))
     .catch((error) => console.error('Error connecting to MongoDB:', error));
