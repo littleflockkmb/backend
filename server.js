@@ -9,9 +9,7 @@ app.use(cors({ origin: 'https://littleflockweb.vercel.app/vbs.html' })); // Allo
 app.use(express.json()); // Parse JSON requests
 
 // Connect to MongoDB
-mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb', {
-  useUnifiedTopology: true
-})
+mongoose.connect('mongodb+srv://littleflockprayerfellowshipweb:flock123@littleflockweb.7aaya.mongodb.net/?retryWrites=true&w=majority&appName=littleflockweb')
   .then(() => console.log('Connected to MongoDB!'))
   .catch((error) => console.error('Error connecting to MongoDB:', error));
 
