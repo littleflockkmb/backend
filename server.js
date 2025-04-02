@@ -1,4 +1,4 @@
-/*const express = require('express');
+const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -163,8 +163,8 @@ app.get('/api/likes/:videoId', async (req, res) => {
 // Start the Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
-*/
-const express = require('express');
+
+/*const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -366,4 +366,4 @@ app.get('/api/comments/:videoId', async (req, res) => {
 
 // Start the Server
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));*/
