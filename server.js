@@ -7,7 +7,7 @@ const app = express();
 
 // Middleware
 app.use(bodyParser.json());
-app.use(cors({ origin: 'https://littleflockweb.vercel.app' })); // Allow requests from the frontend
+app.use(cors({ origin: 'https://vbs-pink.vercel.app' })); // Allow requests from the frontend
 app.use(express.static('public'));
 
 // MongoDB Connection
