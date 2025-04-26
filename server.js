@@ -529,6 +529,25 @@ app.get('/api/comments/:videoId', async (req, res) => {
     }
 });
 
+//verse uploader
+let latestVerse = "Welcome! The verse will update soon."; // Default verse
+
+// Route to update the verse
+app.post('/api/verse', (req, res) => {
+  const { verse } = req.body;
+  
+  if (verse) {
+    latestVerse = verse;
+    res.json({ message: "Verse updated successfully!" });
+  } else {
+    res.status(400).json({ error: "Verse cannot be empty." });
+  }
+});
+
+// Route to get the latest verse
+app.get('/api/verse', (req, res) => {
+  res.json({ verse: latestVerse });
+});
 // Start the Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));*/
