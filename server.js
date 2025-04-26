@@ -161,26 +161,43 @@ app.get('/api/likes/:videoId', async (req, res) => {
 });
 
 // Verse Uploader
-let latestVerse = "Welcome! The verse will update soon."; // Default verse
+// Store Tamil and English verses
+let latestTamilVerse = "Welcome! The Tamil verse will update soon.";
+let latestEnglishVerse = "Welcome! The English verse will update soon.";
 
-// Route to update the verse
-app.post('/api/verse', async (req, res) => {
+// Route to update Tamil verse
+app.post('/api/tamil-verse', async (req, res) => {
   const { verse } = req.body;
 
   if (!verse || verse.trim() === "") {
-    return res.status(400).json({ error: 'Verse cannot be empty.' });
+    return res.status(400).json({ error: 'Tamil verse cannot be empty.' });
   }
 
-  latestVerse = verse; // Store the updated verse
-  res.json({ message: 'Verse updated successfully!', verse });
+  latestTamilVerse = verse;
+  res.json({ message: 'Tamil Verse updated successfully!', verse });
 });
 
+// Route to update English verse
+app.post('/api/english-verse', async (req, res) => {
+  const { verse } = req.body;
 
-// Route to get the latest verse
-app.get('/api/verse', (req, res) => {
-  res.json({ verse: latestVerse });
+  if (!verse || verse.trim() === "") {
+    return res.status(400).json({ error: 'English verse cannot be empty.' });
+  }
+
+  latestEnglishVerse = verse;
+  res.json({ message: 'English Verse updated successfully!', verse });
 });
 
+// Route to get the latest Tamil verse
+app.get('/api/tamil-verse', (req, res) => {
+  res.json({ verse: latestTamilVerse });
+});
+
+// Route to get the latest English verse
+app.get('/api/english-verse', (req, res) => {
+  res.json({ verse: latestEnglishVerse });
+});
 // Start the Server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server is running on http://localhost:${PORT}`));
