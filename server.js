@@ -175,6 +175,7 @@ app.post('/api/verse', async (req, res) => {
   res.json({ message: 'Verse updated successfully!', verse });
 });
 
+
 // Route to get the latest verse
 app.get('/api/verse', (req, res) => {
   res.json({ verse: latestVerse });
